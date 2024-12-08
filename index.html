@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEALTHCARE</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -16,6 +17,7 @@
             <a href="#disease">Disease Diagnosis</a>
             <a href="#drug">Drug Recommendation</a>
             <a href="#bmi">BMI Calculator</a>
+            <a href="#diabetes">Diabetes Risk</a>
             <a href="#about">About Us</a>
         </nav>
         <div id="menu-btn" class="fas fa-bars"></div>
@@ -37,7 +39,14 @@
     <!-- DISEASE DIAGNOSIS-->
     <section class="disease" id="disease">
         <h1 class="heading">disease<span> diagnosis</span></h1>
-        
+        <div class="diagnosis-container">
+            <div class="diagnosis-form">
+                <p class="diagnosis-text">Enter the symptoms you are experiencing (e.g., 'fever, cough, dizziness')</p>
+                <input id="symptoms" type="text" placeholder="Symptoms">
+                <button class="btn" onclick="diagnose()">Diagnose<span>→</span></button>
+                <div id="result" class="result"></div>
+            </div>
+        </div>
     </section>
     <!--DISEASE DIAGNOSIS ends --> 
 
