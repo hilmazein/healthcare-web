@@ -38,22 +38,33 @@
 
     <!-- DISEASE DIAGNOSIS-->
     <section class="disease" id="disease">
-        <h1 class="heading">disease<span> diagnosis</span></h1>
+        <div class="checker-box">
+        <h1 class="heading">Disease<span> Diagnosis</span></h1>
         <div class="diagnosis-container">
             <div class="diagnosis-form">
-                <p class="diagnosis-text">Enter the symptoms you are experiencing (e.g., 'fever, cough, dizziness')</p>
-                <input id="symptoms" type="text" placeholder="Symptoms">
-                <button class="btn" onclick="diagnose()">Diagnose<span>→</span></button>
-                <div id="result" class="result"></div>
+                <h3 class="diagnosis-text">Enter the symptoms you are experiencing (e.g., 'fever, cough, dizziness')</h3>
+                <input type="text" id="symptom-input" placeholder="Enter symptoms">
+                <button class="btn" onclick="diagnose()">Diagnose</button>
+                <div id="diagnosis-result" class="result-box"></div>
             </div>
         </div>
+        </div>
     </section>
-    <!--DISEASE DIAGNOSIS ends --> 
+    <!-- DISEASE DIAGNOSIS ends --> 
 
     <!-- DRUG RECOMMENDATION -->
     <section class="drug" id="drug">
-        <h1 class="heading"><span>drug </span>recommendation</h1>
-        
+        <div class="checker-box">
+        <h1 class="heading"><span>Drug </span>Recommendation</h1>
+        <div class="diagnosis-container">
+            <div class="diagnosis-form">
+                <h3 class="diagnosis-text">Enter the symptoms you are experiencing (e.g., 'fever, cough, dizziness')</h3>
+                <input type="text" id="disease-input" placeholder="Enter diagnosed disease">
+                <button class="btn" onclick="recommendDrugs()">Get Recommendation</button>
+                <div id="drug-result" class="result-box"></div>
+            </div>
+        </div>
+        </div>
     </section>
     <!-- DRUG RECOMMENDATION ends -->
 
