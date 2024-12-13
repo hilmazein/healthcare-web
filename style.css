@@ -260,45 +260,97 @@ section
     }
 }
 
-/*Disease Diagnosis*/ 
-.diagnosis-container {
-    background: #fff;
-    padding: 3rem;
-    border-radius: .5rem;
-    box-shadow: var(--box-shadow);
-    text-align: center;
-    max-width: 60rem;
-    margin: 0 auto;
-}
-
-.diagnosis-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-}
-
-.diagnosis-text {
-    font-size: 1.7rem;
-    color: var(--light-color);
-    margin-bottom: 1rem;
-}
-
-#symptoms {
-    width: 80%;
-    padding: 1.5rem;
-    font-size: 1.6rem;
-    border: var(--border);
-    border-radius: .5rem;
-    margin: 1rem 0;
-}
-
-.result {
-    margin-top: 2rem;
-    font-size: 2rem;
-    color: var(--black);
-    padding: 1.5rem;
-    border-radius: .5rem;
+/* Symptom Checker Styling */
+.symptom-checker {
+    padding: 5rem 9%;
     background: #f5f5f5;
+    text-align: center;
+}
+
+.checker-box {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+    border-radius: 1rem;
+    background: #fff;
+}
+
+.checker-box .diagnosis, .checker-box .recommendation {
+    margin: 2rem 0;
+}
+
+.checker-box h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: var(--black);
+}
+
+.checker-box h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--pink);
+}
+
+.result-box {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: var(--black);
+    text-align: left;
+}
+
+.checker-box input {
     width: 100%;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: var(--border);
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.checker-box .btn {
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+}
+
+/* CSS untuk kotak hasil */
+.result-box {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* CSS untuk tabel hasil diagnosis penyakit dan rekomendasi obat */
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.result-table th, .result-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.result-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.result-table td {
+    background-color: #fafafa;
+}
+
+.result-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.result-table tr:hover {
+    background-color: #f1f1f1;
 }
