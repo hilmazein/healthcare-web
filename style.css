@@ -354,3 +354,177 @@ section
 .result-table tr:hover {
     background-color: #f1f1f1;
 }
+
+
+/* BMI Calculator Styles */
+.bmi-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: .5rem;
+    box-shadow: var(--box-shadow);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.bmi-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.bmi-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bmi-input-group label {
+    font-size: 1.6rem;
+    color: var(--black);
+    font-weight: 500;
+}
+
+.bmi-input-group input {
+    padding: 1rem;
+    border: var(--border);
+    border-radius: .5rem;
+    font-size: 1.6rem;
+}
+
+.bmi-result {
+    margin-top: 2rem;
+    padding: 2rem;
+    border-radius: .5rem;
+    font-size: 1.8rem;
+    color: var(--black);
+    background: #f8f9fa;
+    border-left: 4px solid var(--pink);
+}
+
+.history-section {
+    margin-top: 4rem;
+}
+
+.history-section h2 {
+    font-size: 2.5rem;
+    color: var(--black);
+    margin-bottom: 2rem;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+.history-table th,
+.history-table td {
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 1.4rem;
+}
+
+.history-table th {
+    background: var(--pink);
+    color: #fff;
+    font-weight: 500;
+}
+
+.history-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.history-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+@media (max-width: 768px) {
+    .bmi-container {
+        padding: 1.5rem;
+    }
+    
+    .history-table th,
+    .history-table td {
+        padding: 1rem;
+        font-size: 1.2rem;
+    }
+}
+
+/*Diabetes Risk*/
+.diabetes-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: .5rem;
+    box-shadow: var(--box-shadow);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.diabetes-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.diabetes-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.diabetes-input-group label {
+    font-size: 1.6rem;
+    color: var(--black);
+    font-weight: 500;
+}
+
+.diabetes-input-group input {
+    padding: 1rem;
+    border: var(--border);
+    border-radius: .5rem;
+    font-size: 1.6rem;
+}
+
+#diabetes-result {
+    margin-top: 2rem;
+    padding: 2rem;
+    border-radius: .5rem;
+    display: none;
+}
+
+#diabetes-result.high-risk {
+    background-color: #ffe6e6;
+    border-left: 4px solid #ff4444;
+}
+
+#diabetes-result.moderate-risk {
+    background-color: #fff3e6;
+    border-left: 4px solid #ffa500;
+}
+
+#diabetes-result h3 {
+    color: var(--black);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+#diabetes-result p {
+    font-size: 1.6rem;
+    color: var(--light-color);
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .diabetes-container {
+        padding: 1.5rem;
+    }
+    
+    .diabetes-input-group input {
+        font-size: 1.4rem;
+    }
+}
