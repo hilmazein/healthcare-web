@@ -112,3 +112,250 @@ function recommendDrugs() {
         .join('') + "</table>";
     document.getElementById('result-box').style.display = 'block'; // Show result box
 }
+
+
+// BMI Calculator
+// Store BMI calculation history in an array
+let bmiHistory = [];
+
+// Define BMI categories and their descriptions using an object for O(1) lookup
+const bmiCategories = {
+    underweight: 'Underweight (BMI < 18.5)',
+    normal: 'Normal weight (BMI 18.5 - 24.9)',
+    overweight: 'Overweight (BMI 25 - 29.9)',
+    obesity: 'Obesity (BMI >= 30)'
+};
+
+/*
+ * Initialize the BMI calculator functionality
+ * Sets up event listeners and form handling
+ */
+function initializeBMICalculator() {
+    // Get reference to the BMI form
+    const bmiForm = document.getElementById('bmiForm');
+    
+    // Check if form exists to prevent errors
+    if (bmiForm) {
+        // Add submit event listener to the form
+        bmiForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission
+            
+            // Get and parse weight and height values from inputs
+            const weight = parseFloat(document.getElementById('weight').value);
+            const heightInCm = parseFloat(document.getElementById('height').value);
+            
+            // Validate inputs are positive numbers
+            if (weight <= 0 || heightInCm <= 0) {
+                alert('Please enter positive values for weight and height.');
+                return;
+            }
+            
+            // Convert height to meters for BMI calculation
+            const height = heightInCm / 100;
+            
+            // Calculate BMI using the formula
+            const bmi = (weight / (height * height)).toFixed(2);
+            
+            // Determine BMI category based on calculated value
+            let category;
+            if (bmi < 18.5) {
+                category = bmiCategories.underweight;
+            } else if (bmi < 24.9) {
+                category = bmiCategories.normal;
+            } else if (bmi < 29.9) {
+                category = bmiCategories.overweight;
+            } else {
+                category = bmiCategories.obesity;
+            }
+            
+            // Display result to user
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `Your BMI is <strong>${bmi}</strong><br>${category}`;
+            
+            // Add calculation to history
+            bmiHistory.push({
+                weight,
+                heightInCm,
+                bmi,
+                category,
+                date: new Date() // Add timestamp
+            });
+            
+            // Update history display
+            updateBMIHistoryUI();
+        });
+    }
+}
+
+/*
+ * Update the BMI history table
+ * Sorts entries by date and displays them in the table
+ */
+function updateBMIHistoryUI() {
+    // Get reference to table body
+    const historyBody = document.getElementById('historyBody');
+    if (!historyBody) return; // Exit if table doesn't exist
+    
+    // Clear existing table content
+    historyBody.innerHTML = '';
+    
+    // Sort history by date (newest first) and create table rows
+    bmiHistory
+        .sort((a, b) => b.date - a.date)
+        .forEach(record => {
+            // Create new table row
+            const row = document.createElement('tr');
+            // Populate row with record data
+            row.innerHTML = `
+                <td>${record.weight}</td>
+                <td>${record.heightInCm}</td>
+                <td>${record.bmi}</td>
+                <td>${record.category}</td>
+                <td>${record.date.toLocaleString()}</td>
+            `;
+            // Add row to table
+            historyBody.appendChild(row);
+        });
+}
+
+// Initialize BMI calculator when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initializeBMICalculator();
+});
+
+
+// Diabetes Risk
+// Define RiskNode class to handle risk classification for different health factors
+class RiskNode {
+    // Constructor to initialize risk thresholds for a health factor
+    constructor(value, lowThreshold, highThreshold) {
+        this.value = value;                    
+        this.lowThreshold = lowThreshold;      
+        this.highThreshold = highThreshold;    
+    }
+
+    // Method to classify a given input value into risk categories
+    classify(inputValue) {
+        // If value is below lowThreshold, risk is low
+        if (inputValue < this.lowThreshold) {
+            return "low";
+        // If value is below highThreshold but above lowThreshold, risk is moderate
+        } else if (inputValue < this.highThreshold) {
+            return "moderate";
+        // If value is above highThreshold, risk is high
+        } else {
+            return "high";
+        }
+    }
+}
+
+// Define risk thresholds for each health factor based on medical guidelines
+const riskTree = {
+    age: new RiskNode("age", 35, 50),              
+    bmi: new RiskNode("bmi", 25, 30),             
+    glucose: new RiskNode("glucose", 100, 125),   
+    bloodPressure: new RiskNode("bloodPressure", 120, 140),  
+};
+
+// Create a directed graph showing relationships between risk factors
+const riskGraph = new Map();
+// Glucose levels influence BMI and blood pressure
+riskGraph.set("glucose", ["bmi", "bloodPressure"]);
+// BMI is influenced by glucose and age
+riskGraph.set("bmi", ["glucose", "age"]);
+// Blood pressure is influenced by age
+riskGraph.set("bloodPressure", ["age"]);
+// Age has no dependencies
+riskGraph.set("age", []);
+
+// Define numerical scores for risk levels to enable comparisons
+const riskScores = {
+    low: 0,       
+    moderate: 1,   
+    high: 2      
+};
+
+/*
+ * Calculate the highest risk level among given factors using a greedy approach
+ * @param {Array} factors - Array of health factors to evaluate
+ * @returns {string} - Highest risk level found ("low", "moderate", or "high")
+ */
+function greedyHighestRisk(factors) {
+    // Initialize with lowest risk level
+    let highestRisk = "low";
+
+    // Evaluate each factor
+    factors.forEach(factor => {
+        // Get the input value from the corresponding form field
+        const inputValue = parseFloat(document.getElementById(`diabetes-${factor}`).value);
+        
+        // Validate input value
+        if (isNaN(inputValue)) {
+            console.error(`Invalid value for ${factor}`);
+            return;
+        }
+        
+        // Classify the current factor's risk level
+        const currentRisk = riskTree[factor].classify(inputValue);
+        
+        // Update highestRisk if current factor has higher risk score
+        if (riskScores[currentRisk] > riskScores[highestRisk]) {
+            highestRisk = currentRisk;
+        }
+    });
+
+    return highestRisk;
+}
+
+/*
+ * Calculate overall diabetes risk based on all factors and their relationships
+ * Considers both direct risk factors and influenced factors
+ */
+function calculateDiabetesRisk() {
+    // Define all risk factors to evaluate
+    const factors = ["age", "bmi", "glucose", "bloodPressure"];
+    // Get factors influenced by glucose levels
+    const influencedFactors = riskGraph.get("glucose") || [];
+
+    // Calculate highest risk among all direct factors
+    const directRiskCategory = greedyHighestRisk(factors);
+    // Calculate highest risk among factors influenced by glucose
+    const influencedRiskCategory = greedyHighestRisk(influencedFactors);
+
+    // Determine final risk category based on combined risk scores
+    // High risk if combined score >= 3, otherwise moderate risk
+    const finalRisk =
+        riskScores[directRiskCategory] + riskScores[influencedRiskCategory] >= 3
+            ? "High Risk"
+            : "Moderate Risk";
+
+    // Get result display element
+    const resultDiv = document.getElementById("diabetes-result");
+    // Make result visible
+    resultDiv.style.display = "block";
+    
+    // Apply appropriate styling based on risk level
+    resultDiv.className = 'result ' + 
+        (finalRisk === "High Risk" ? "high-risk" : "moderate-risk");
+    
+    // Display formatted result to user
+    resultDiv.innerHTML = `
+        <h3>Risk Assessment Results</h3>
+        <p><strong>Risk Category:</strong> ${finalRisk}</p>
+        <p>Please consult with a healthcare professional for a complete evaluation.</p>
+    `;
+}
+
+// Initialize event listeners when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Get reference to diabetes assessment form
+    const diabetesForm = document.getElementById('diabetesForm');
+    
+    // Add form submission handler if form exists
+    if (diabetesForm) {
+        diabetesForm.addEventListener('submit', (e) => {
+            e.preventDefault();  // Prevent default form submission
+            calculateDiabetesRisk();  // Calculate and display risk assessment
+        });
+    }
+});
