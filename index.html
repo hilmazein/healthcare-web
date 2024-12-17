@@ -71,14 +71,70 @@
     <!-- BMI CALCULATOR -->
     <section class="bmi" id="bmi">
         <h1 class="heading"><span>bmi</span> calculator</h1>
-        
+        <div class="bmi-container">
+            <form id="bmiForm" class="bmi-form">
+                <div class="bmi-input-group">
+                    <label for="weight">Weight (kg)</label>
+                    <input type="number" id="weight" required>
+                </div>
+                <div class="bmi-input-group">
+                    <label for="height">Height (cm)</label>
+                    <input type="number" id="height" required>
+                </div>
+                <button type="submit" class="btn">Calculate BMI <span>→</span></button>
+            </form>
+            <div id="result" class="bmi-result"></div>
+            <div class="history-section">
+                <h2>History</h2>
+                <div class="table-container">
+                    <table id="historyTable" class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Weight (kg)</th>
+                                <th>Height (cm)</th>
+                                <th>BMI</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- BMI CALCULATOR ends -->
 
     <!-- DIABETES RISK -->
     <section class="diabetes" id="diabetes">
         <h1 class="heading"><span>diabetes</span> risk</h1>
-        
+        <div class="diabetes-container">
+            <form id="diabetesForm" class="diabetes-form">
+                <div class="diabetes-input-group">
+                    <label for="diabetes-age">Age (years)</label>
+                    <input type="number" id="diabetes-age" placeholder="Enter your age" required>
+                </div>
+    
+                <div class="diabetes-input-group">
+                    <label for="diabetes-bmi">BMI</label>
+                    <input type="number" id="diabetes-bmi" step="0.1" placeholder="Enter your BMI" required>
+                </div>
+    
+                <div class="diabetes-input-group">
+                    <label for="diabetes-glucose">Glucose Level (mg/dL)</label>
+                    <input type="number" id="diabetes-glucose" placeholder="Enter your glucose level" required>
+                </div>
+    
+                <div class="diabetes-input-group">
+                    <label for="diabetes-bloodPressure">Blood Pressure (mmHg)</label>
+                    <input type="number" id="diabetes-bloodPressure" placeholder="Enter your blood pressure" required>
+                </div>
+    
+                <button type="submit" class="btn">Calculate Risk <span>→</span></button>
+    
+                <div id="diabetes-result" class="result"></div>
+            </form>
+        </div>
     </section>
     <!-- DIABETES RISK ends -->
 
