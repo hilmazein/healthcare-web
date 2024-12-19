@@ -115,112 +115,139 @@ function recommendDrugs() {
 
 
 // BMI Calculator
-// Store BMI calculation history in an array
-let bmiHistory = [];
-
-// Define BMI categories and their descriptions using an object for O(1) lookup
-const bmiCategories = {
-    underweight: 'Underweight (BMI < 18.5)',
-    normal: 'Normal weight (BMI 18.5 - 24.9)',
-    overweight: 'Overweight (BMI 25 - 29.9)',
-    obesity: 'Obesity (BMI >= 30)'
-};
-
-/*
- * Initialize the BMI calculator functionality
- * Sets up event listeners and form handling
- */
-function initializeBMICalculator() {
-    // Get reference to the BMI form
-    const bmiForm = document.getElementById('bmiForm');
-    
-    // Check if form exists to prevent errors
-    if (bmiForm) {
-        // Add submit event listener to the form
-        bmiForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent form submission
-            
-            // Get and parse weight and height values from inputs
-            const weight = parseFloat(document.getElementById('weight').value);
-            const heightInCm = parseFloat(document.getElementById('height').value);
-            
-            // Validate inputs are positive numbers
-            if (weight <= 0 || heightInCm <= 0) {
-                alert('Please enter positive values for weight and height.');
-                return;
-            }
-            
-            // Convert height to meters for BMI calculation
-            const height = heightInCm / 100;
-            
-            // Calculate BMI using the formula
-            const bmi = (weight / (height * height)).toFixed(2);
-            
-            // Determine BMI category based on calculated value
-            let category;
-            if (bmi < 18.5) {
-                category = bmiCategories.underweight;
-            } else if (bmi < 24.9) {
-                category = bmiCategories.normal;
-            } else if (bmi < 29.9) {
-                category = bmiCategories.overweight;
-            } else {
-                category = bmiCategories.obesity;
-            }
-            
-            // Display result to user
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `Your BMI is <strong>${bmi}</strong><br>${category}`;
-            
-            // Add calculation to history
-            bmiHistory.push({
-                weight,
-                heightInCm,
-                bmi,
-                category,
-                date: new Date() // Add timestamp
-            });
-            
-            // Update history display
-            updateBMIHistoryUI();
-        });
+// Node structure for Tree
+class TreeNode {
+    constructor(value, recommendations = null) {
+        this.value = value; 
+        this.recommendations = recommendations; 
+        this.left = null; 
+        this.right = null; 
     }
 }
 
-/*
- * Update the BMI history table
- * Sorts entries by date and displays them in the table
- */
-function updateBMIHistoryUI() {
-    // Get reference to table body
-    const historyBody = document.getElementById('historyBody');
-    if (!historyBody) return; // Exit if table doesn't exist
-    
-    // Clear existing table content
-    historyBody.innerHTML = '';
-    
-    // Sort history by date (newest first) and create table rows
-    bmiHistory
-        .sort((a, b) => b.date - a.date)
-        .forEach(record => {
-            // Create new table row
-            const row = document.createElement('tr');
-            // Populate row with record data
-            row.innerHTML = `
-                <td>${record.weight}</td>
-                <td>${record.heightInCm}</td>
-                <td>${record.bmi}</td>
-                <td>${record.category}</td>
-                <td>${record.date.toLocaleString()}</td>
-            `;
-            // Add row to table
-            historyBody.appendChild(row);
-        });
+// Build a Binary Search Tree for BMI categories
+function buildBMICategoryTree() {
+    const underweight = new TreeNode('underweight', {
+        diet: ['Eat high-protein foods', 'Increase calorie intake with healthy fats'],
+        exercise: ['Strength training 2-3 times a week', 'Avoid excessive cardio']
+    });
+
+    const healthy = new TreeNode('healthy', {
+        diet: ['Maintain balanced meals', 'Eat fruits and vegetables daily'],
+        exercise: ['150 minutes of moderate exercise weekly', 'Strength training and cardio']
+    });
+
+    const overweight = new TreeNode('overweight', {
+        diet: ['Reduce portion sizes', 'Avoid sugary foods'],
+        exercise: ['Start with walking daily', 'Cycling or swimming']
+    });
+
+    const obese = new TreeNode('obese', {
+        diet: ['Consult with a nutritionist', 'Limit your calorie intake'],
+        exercise: ['Low-impact exercises', 'Consult a physiotherapist']
+    });
+
+    // Build the tree
+    healthy.left = underweight;
+    healthy.right = overweight;
+    overweight.right = obese;
+
+    return healthy; 
 }
 
-// Initialize BMI calculator when DOM is fully loaded
+// Search the Tree for recommendations based on category
+function searchTree(node, category) {
+    if (!node) return null; // Base case: node not found
+
+    if (node.value === category) return node.recommendations; // Match found
+
+    // Search both left and right subtrees
+    return searchTree(node.left, category) || searchTree(node.right, category);
+}
+
+// BMI calculation function
+function calculateBMI(weight, height) {
+    const bmi = weight / ((height / 100) ** 2);
+    let category = '';
+
+    if (bmi < 18.5) category = 'underweight';
+    else if (bmi < 25) category = 'healthy';
+    else if (bmi < 30) category = 'overweight';
+    else category = 'obese';
+
+    return { bmi: parseFloat(bmi.toFixed(1)), category };
+}
+
+// Function to display recommendations
+function displayRecommendations(recommendations) {
+    const recommendationsContainer = document.getElementById('recommendationsContainer');
+    recommendationsContainer.innerHTML = '';
+
+    if (!recommendations) {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 2;
+        cell.className = 'initial-message';
+        cell.textContent = 'No recommendations available';
+        row.appendChild(cell);
+        recommendationsContainer.appendChild(row);
+        return;
+    }
+
+    const row = document.createElement('tr');
+
+    // Create diet recommendations cell
+    const dietCell = document.createElement('td');
+    recommendations.diet.forEach(rec => {
+        const p = document.createElement('p');
+        p.textContent = rec;
+        dietCell.appendChild(p);
+    });
+
+    // Create exercise recommendations cell
+    const exerciseCell = document.createElement('td');
+    recommendations.exercise.forEach(rec => {
+        const p = document.createElement('p');
+        p.textContent = rec;
+        exerciseCell.appendChild(p);
+    });
+
+    row.appendChild(dietCell);
+    row.appendChild(exerciseCell);
+    recommendationsContainer.appendChild(row);
+}
+
+// Initialize the BMI category tree
+const bmiCategoryTree = buildBMICategoryTree();
+
+// Event listener for form submission
 document.addEventListener('DOMContentLoaded', () => {
-    initializeBMICalculator();
+    const bmiForm = document.getElementById('bmiForm');
+
+    if (bmiForm) {
+        bmiForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+
+            if (!weight || !height) {
+                alert('Please enter valid weight and height values');
+                return;
+            }
+
+            const { bmi, category } = calculateBMI(weight, height);
+
+            // Update the display
+            document.getElementById('bmiValue').textContent = bmi;
+            document.getElementById('bmiCategory').textContent =
+                category.charAt(0).toUpperCase() + category.slice(1);
+
+            // Show recommendations
+            const recommendations = searchTree(bmiCategoryTree, category);
+            displayRecommendations(recommendations);
+        });
+    }
 });
 
 
