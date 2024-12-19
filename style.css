@@ -357,6 +357,136 @@ section
 
 
 /* BMI Calculator Styles */
+:root {
+    --underweight: orange;
+    --normal: green;
+    --overweight: lightcoral;
+    --obese: crimson;
+}
+
+.bmi .container {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    width: min(800px, 100%);
+    margin: 0 auto;
+}
+
+.bmi .calculator {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.bmi .input-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.bmi .input-group label {
+    flex: 0 0 120px;
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+
+.bmi .input-group input {
+    flex: 1;
+    padding: 10px;
+    border: var(--border);
+    border-radius: 5px;
+    font-size: 1.6rem;
+    text-align: center;
+    width: 45%;
+    margin-top: -100px;
+}
+
+.bmi .button-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.bmi .btn-reset,
+.bmi .btn-submit {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.bmi .btn-reset {
+    background: #444;
+    color: white;
+}
+
+.bmi .btn-submit {
+    background: var(--pink);
+    color: white;
+}
+
+.bmi .output {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.bmi #bmi {
+    font-size: 4rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--black);
+}
+
+.bmi .bmi-scale {
+    display: flex;
+    margin: 2rem 0;
+}
+
+.bmi .scale-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border-top: 5px solid var(--color);
+    font-size: 1.4rem;
+}
+
+.bmi .scale-item h4 {
+    font-size: 1.6rem;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+}
+
+.bmi #recommendations table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+.bmi #recommendations th,
+.bmi #recommendations td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: left;
+    font-size: 1.4rem;
+}
+
+.bmi #recommendations th {
+    background-color: var(--pink);
+    color: white;
+    text-align: center;
+}
+
+.bmi #recommendations td {
+    background-color: #f5f5f5;
+}
+
 .bmi-container {
     background: #fff;
     padding: 2rem;
@@ -366,92 +496,138 @@ section
     margin: 0 auto;
 }
 
-.bmi-form {
+.bmi :root {
+    --underweight: orange;
+    --normal: green;
+    --overweight: lightcoral;
+    --obese: crimson;
+}
+
+.calculator {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-.bmi-input-group {
+.input-group {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.bmi-input-group label {
+.input-group label {
     font-size: 1.6rem;
     color: var(--black);
     font-weight: 500;
 }
 
-.bmi-input-group input {
+.input-group input {
     padding: 1rem;
     border: var(--border);
     border-radius: .5rem;
     font-size: 1.6rem;
 }
 
-.bmi-result {
+.button-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.button-group .btn {
+    flex: 1;
+}
+
+.output {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.output h3 {
+    color: var(--black);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+#bmiValue {
+    font-size: 4rem;
+    font-weight: 600;
+    color: var(--pink);
+    margin-bottom: .5rem;
+}
+
+#bmiCategory {
+    font-size: 2rem;
+    color: var(--black);
+}
+
+.bmi-scale {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.scale-item {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+    border-top: 5px solid var(--color);
+}
+
+.scale-item h4 {
+    font-size: 1.6rem;
+    color: var(--black);
+    margin-bottom: .5rem;
+}
+
+#recommendations {
     margin-top: 2rem;
-    padding: 2rem;
-    border-radius: .5rem;
-    font-size: 1.8rem;
+}
+
+#recommendations h3 {
     color: var(--black);
-    background: #f8f9fa;
-    border-left: 4px solid var(--pink);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
-.history-section {
-    margin-top: 4rem;
-}
-
-.history-section h2 {
-    font-size: 2.5rem;
-    color: var(--black);
-    margin-bottom: 2rem;
-}
-
-.table-container {
-    overflow-x: auto;
-}
-
-.history-table {
+#recommendations table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 2rem;
 }
 
-.history-table th,
-.history-table td {
-    padding: 1.5rem;
-    text-align: center;
-    border: 1px solid #ddd;
-    font-size: 1.4rem;
+#recommendations table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
 }
 
-.history-table th {
+#recommendations th {
     background: var(--pink);
     color: #fff;
-    font-weight: 500;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.6rem;
 }
 
-.history-table tr:nth-child(even) {
-    background-color: #f8f9fa;
+#recommendations td {
+    padding: 1rem;
+    font-size: 1.4rem;
+    background-color: #f5f5f5;
 }
 
-.history-table tr:hover {
-    background-color: #f1f1f1;
+.initial-message {
+    text-align: center;
+    color: var(--light-color);
 }
 
 @media (max-width: 768px) {
-    .bmi-container {
-        padding: 1.5rem;
+    .bmi-scale {
+        flex-direction: column;
     }
     
-    .history-table th,
-    .history-table td {
-        padding: 1rem;
-        font-size: 1.2rem;
+    .button-group {
+        flex-direction: column;
     }
 }
 
