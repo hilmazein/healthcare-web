@@ -71,35 +71,64 @@
     <!-- BMI CALCULATOR -->
     <section class="bmi" id="bmi">
         <h1 class="heading"><span>bmi</span> calculator</h1>
-        <div class="bmi-container">
-            <form id="bmiForm" class="bmi-form">
-                <div class="bmi-input-group">
-                    <label for="weight">Weight (kg)</label>
-                    <input type="number" id="weight" required>
-                </div>
-                <div class="bmi-input-group">
-                    <label for="height">Height (cm)</label>
-                    <input type="number" id="height" required>
-                </div>
-                <button type="submit" class="btn">Calculate BMI <span>→</span></button>
-            </form>
-            <div id="result" class="bmi-result"></div>
-            <div class="history-section">
-                <h2>History</h2>
-                <div class="table-container">
-                    <table id="historyTable" class="history-table">
-                        <thead>
+        <div id="bmi" class="section bmi">
+            <div class="bmi-container">
+                <form class="calculator" id="bmiForm">
+                    <div class="input-group">
+                        <label for="weight">Weight (Kg)</label>
+                        <input type="number" id="weight" placeholder="Enter weight">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="height">Height (Cm)</label>
+                        <input type="number" id="height" placeholder="Enter height">
+                    </div>
+        
+                    <div class="button-group">
+                        <button type="reset" class="btn">Reset <span>→</span></button>
+                        <button type="submit" class="btn">Calculate BMI <span>→</span></button>
+                    </div>
+        
+                    <div class="output">
+                        <h3>Your BMI is</h3>
+                        <div id="bmiValue">0</div>
+                        <div id="bmiCategory">N/A</div>
+                    </div>
+        
+                    <div class="bmi-scale">
+                        <div class="scale-item" style="--color: var(--underweight)">
+                            <h4>Underweight</h4>
+                            &lt; 18.5
+                        </div>
+                        <div class="scale-item" style="--color: var(--normal)">
+                            <h4>Normal</h4>
+                            18.5 - 24.9
+                        </div>
+                        <div class="scale-item" style="--color: var(--overweight)">
+                            <h4>Overweight</h4>
+                            25 - 29.9
+                        </div>
+                        <div class="scale-item" style="--color: var(--obese)">
+                            <h4>Obese</h4>
+                            ≥ 30
+                        </div>
+                    </div>
+        
+                    <div id="recommendations">
+                        <h3>Recommendations</h3>
+                        <table>
                             <tr>
-                                <th>Weight (kg)</th>
-                                <th>Height (cm)</th>
-                                <th>BMI</th>
-                                <th>Category</th>
-                                <th>Date</th>
+                                <th>Diet Recommendations</th>
+                                <th>Exercise Recommendations</th>
                             </tr>
-                        </thead>
-                        <tbody id="historyBody"></tbody>
-                    </table>
-                </div>
+                            <tbody id="recommendationsContainer">
+                                <tr>
+                                    <td colspan="2" class="initial-message">Enter your BMI to see recommendations</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
