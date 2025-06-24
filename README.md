@@ -4,3 +4,6 @@ Our Features :
 2.⁠ ⁠Drug recommendation system
 3.⁠ ⁠⁠BMI calculator
 4. Diabetes risk calculator
+
+
+https://hilmazein.github.io/healthcare-web/
